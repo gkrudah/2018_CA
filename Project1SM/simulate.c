@@ -17,19 +17,6 @@ typedef struct stateStruct
 void printState(stateType *);
 int simulator(stateType *);
 
-enum Opcode
-{
-	add = 0,
-	nor,
-	lw,
-	sw,
-	beq,
-	jalr,
-	halt,
-	noop,
-	_fill
-};
-
 int main(int argc, char *argv[])
 {
 	char line[MAXLINELENGTH];
