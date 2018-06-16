@@ -202,6 +202,9 @@ int main(int argc, char *argv[])
 	    state.dataMem[state.numMemory] = state.instrMem[state.numMemory];
 		printf("memory[%d]=%d\n", state.numMemory, state.dataMem[state.numMemory]);
 	}
+
+    for(i = 0; i < state.numMemory; i++)
+        printf("instrMem[%d]=%0x\n", i,  state.instrMem[i]);
     
     //initialize
     state.pc = 0;
@@ -260,7 +263,10 @@ int run(stateType *stateptr)
         newState.IDEX.pcPlus1 = state.IFID.pcPlus1;
         newState.IDEX.readRegA = state.reg[field0(state.IFID.instr)];
         newState.IDEX.readRegB = state.reg[field1(state.IFID.instr)];
-        newState.IDEX.offset = field2(state.IFID.instr);
+        if(field2(state.IFID.instr) > 32767)
+            newState.IDEX.offset = field2(state.IFID.instr) - 65536;
+        else
+            newState.IDEX.offset = field2(state.IFID.instr);
     	/* --------------------- EX stage --------------------- */
 		newState.EXMEM.instr = state.IDEX.instr;
         newState.EXMEM.branchTarget = state.IDEX.pcPlus1 + state.IDEX.offset;
